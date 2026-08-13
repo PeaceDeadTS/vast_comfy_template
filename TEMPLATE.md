@@ -12,7 +12,7 @@
 
 | Имя | Значение | Комментарий |
 |---|---|---|
-| `PROVISIONING_SCRIPT` | `https://raw.githubusercontent.com/<USER>/<REPO>/<BRANCH>/provisioning/minimax-h3.sh` | После push в GitHub подставить свой raw-URL |
+| `PROVISIONING_SCRIPT` | `https://raw.githubusercontent.com/PeaceDeadTS/vast_comfy_template/main/provisioning/minimax-h3.sh` | Raw-URL скрипта из этого репо |
 | `AUTO_UPDATE` | `true` | Подтянуть свежий ComfyUI (H3 с 0.30.0+) |
 | `COMFYUI_ARGS` | `--disable-auto-launch --port 18188 --enable-cors-header` | Как в официальном шаблоне, не менять без нужды |
 | `WEB_ENABLE_AUTH` | `true` | Не выключать на публичном IP |

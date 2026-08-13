@@ -25,10 +25,10 @@ R2V (`ref2va`) в этой версии не скачивается.
 
 ## Как подключить к Vast
 
-1. Запушить репозиторий в GitHub.
-2. Скопировать raw-URL:
+1. Репозиторий: https://github.com/PeaceDeadTS/vast_comfy_template
+2. Raw-URL скрипта:
 
-   `https://raw.githubusercontent.com/<USER>/<REPO>/<BRANCH>/provisioning/minimax-h3.sh`
+   `https://raw.githubusercontent.com/PeaceDeadTS/vast_comfy_template/main/provisioning/minimax-h3.sh`
 
 3. На Vast: **Templates** → найти **ComfyUI** → **Edit**.
 4. Заполнить поля из [TEMPLATE.md](TEMPLATE.md):
