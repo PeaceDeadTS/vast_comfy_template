@@ -1,11 +1,10 @@
 #!/bin/bash
 # This file will be sourced in init.sh (ai-dock/comfyui on Vast.ai).
-# MiniMax H3: T2V + I2V (full FL2VA BF16 + INT8 convrot TE + stock VAEs).
+# MiniMax H3: T2V + I2V (fl2va pruned BF16 + INT8 convrot TE + stock VAEs).
 # Models are NOT baked into the image; they download to /workspace on first boot.
-# OOM fallback (manual): minimax_h3_fl2va_int8_convrot.safetensors (~34 GB).
 
 HF_REPO="Comfy-Org/MiniMax-H3"
-DISK_GB_REQUIRED=200
+DISK_GB_REQUIRED=150
 
 APT_PACKAGES=()
 PIP_PACKAGES=("huggingface_hub[cli]")
@@ -13,7 +12,7 @@ NODES=()
 
 # name|relative_path|min_bytes
 H3_FILES=(
-    "minimax_h3_fl2va_bf16.safetensors|diffusion_models/minimax_h3_fl2va_bf16.safetensors|65000000000"
+    "minimax_h3_fl2va_pruned_bf16.safetensors|diffusion_models/minimax_h3_fl2va_pruned_bf16.safetensors|40000000000"
     "qwen3vl_32b_minimax_h3_int8_convrot.safetensors|text_encoders/qwen3vl_32b_minimax_h3_int8_convrot.safetensors|24000000000"
     "minimax_h3_video_vae_fp16.safetensors|vae/minimax_h3_video_vae_fp16.safetensors|4000000000"
     "minimax_h3_audio_vae_fp32.safetensors|vae/minimax_h3_audio_vae_fp32.safetensors|500000000"
@@ -32,7 +31,7 @@ function pip_install() {
 function provisioning_print_header() {
     printf "\n##############################################\n"
     printf "#  Provisioning: ComfyUI + MiniMax H3        #\n"
-    printf "#  ~97 GB download on first boot             #\n"
+    printf "#  ~71 GB download on first boot             #\n"
     printf "##############################################\n\n"
     if [[ -n "${DISK_GB_ALLOCATED:-}" && "${DISK_GB_ALLOCATED}" -lt "${DISK_GB_REQUIRED}" ]]; then
         printf "WARNING: allocated disk (%sGB) is below recommended %sGB\n" \

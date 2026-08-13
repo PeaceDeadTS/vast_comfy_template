@@ -22,18 +22,18 @@
 
 ## Диск
 
-- **Disk space: 200 GB**
-- Модели ~97 GB + ComfyUI + вывод + запас
+- **Disk space: 150 GB**
+- Модели ~71 GB + ComfyUI + вывод + запас
 
 ## Фильтр офферов (Search / Create)
 
 Вставить в фильтр поиска машин:
 
 ```
-gpu_ram>=80 inet_down>=500 disk_space>=200
+gpu_ram>=48 inet_down>=500 disk_space>=150
 ```
 
-Целевая карта: RTX PRO 6000 Blackwell (96 GB). На 48 GB полный BF16 DiT не держать — fallback `minimax_h3_fl2va_int8_convrot.safetensors`.
+Предпочтительные карты: RTX 6000 Ada, L40, L40S, A40, A6000. На 24 GB (4090) этот набор весов (pruned BF16 DiT + INT8 TE) будет с тяжёлым offload.
 
 ## Порты
 
@@ -44,23 +44,23 @@ gpu_ram>=80 inet_down>=500 disk_space>=200
 1. Выбрать шаблон в **My Templates**.
 2. Снять инстанс с хорошим uplink (`inet_down>=500`).
 3. В форме инстанса добавить `HF_TOKEN`.
-4. Дождаться конца provisioning (десятки минут, качается ~97 GB). Логи: Jupyter terminal или `/var/log` / supervisor.
+4. Дождаться конца provisioning (десятки минут, качается ~71 GB). Логи: Jupyter terminal или `/var/log` / supervisor.
 5. Instance Portal → **OPEN** → ComfyUI.
 6. Template Library → Video → **MiniMax H3 T2V** или **I2V**. Кнопки Download в UI не нажимать — файлы уже на диске инстанса.
 
 ## Проверка на инстансе
 
 ```bash
-ls -lh /workspace/storage/stable_diffusion/models/diffusion_models/minimax_h3_fl2va_bf16.safetensors
+ls -lh /workspace/storage/stable_diffusion/models/diffusion_models/minimax_h3_fl2va_pruned_bf16.safetensors
 ls -lh /workspace/storage/stable_diffusion/models/text_encoders/qwen3vl_32b_minimax_h3_int8_convrot.safetensors
 ls -lh /workspace/storage/stable_diffusion/models/vae/minimax_h3_video_vae_fp16.safetensors
 ls -lh /workspace/storage/stable_diffusion/models/vae/minimax_h3_audio_vae_fp32.safetensors
 ```
 
-Ожидаемые размеры: ~66.3 GB, ~25 GB, ~4.9 GB, ~0.6 GB.
+Ожидаемые размеры: ~40.2 GB, ~25 GB, ~4.9 GB, ~0.6 GB.
 
 ## Чего не делать
 
 - Не публиковать шаблон с заполненным `HF_TOKEN`.
 - Не качать модели в Docker-образ.
-- Не ставить диск меньше 180 GB.
+- Не ставить диск меньше 120 GB.
